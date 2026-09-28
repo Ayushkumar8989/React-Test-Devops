@@ -1,35 +1,28 @@
-pipeline{
+pipeline {
     agent any
 
-    tools{
+    tools {
         nodejs "NodeJS"
     }
 
-    stages{
-        stage('Checkout'){
-            steps{
-                checkout srm
-            }
-        }
-
+    stages {
         stage('Install Dependencies') {
             steps {
-                sh 'rm -rf node_module package-lock.json'
+                sh 'rm -rf node_modules package-lock.json'
                 sh 'npm install --ignore-scripts=false'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npm eun test -- --run'
+                sh 'npm run test -- --run'
             }
         }
 
-        stage('Build'){
-            steps{
+        stage('Build') {
+            steps {
                 sh 'npm run build'
             }
         }
-
     }
 }
